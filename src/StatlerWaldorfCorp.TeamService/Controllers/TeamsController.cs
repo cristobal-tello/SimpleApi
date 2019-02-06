@@ -8,7 +8,7 @@ namespace StatlerWaldorfCorp.TeamService
     [Route("[controller]")]
     public class TeamsController : Controller
     {
-        ITeamRepository repository;
+        readonly ITeamRepository repository;
 
         public TeamsController(ITeamRepository repository)
         {

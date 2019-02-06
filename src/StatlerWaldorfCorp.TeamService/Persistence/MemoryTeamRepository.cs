@@ -7,7 +7,7 @@ namespace StatlerWaldorfCorp.TeamService.Persistence
 {
     public class MemoryTeamRepository : ITeamRepository
     {
-        protected static ICollection<Team> teams;
+        protected ICollection<Team> teams;
 
         public MemoryTeamRepository()
         {
@@ -19,7 +19,11 @@ namespace StatlerWaldorfCorp.TeamService.Persistence
 
         public MemoryTeamRepository(ICollection<Team> teams)
         {
-            MemoryTeamRepository.teams = teams;
+            if (teams != null)
+            {
+                teams.Clear();
+            }
+            this.teams = new List<Team>(teams);
         }
 
         public IEnumerable<Team> List()
@@ -32,16 +36,16 @@ namespace StatlerWaldorfCorp.TeamService.Persistence
             return teams.FirstOrDefault(t => t.ID == id);
         }
 
-        public Team Update(Team t)
+        public Team Update(Team team)
         {
-            Team team = this.Delete(t.ID);
+            Team deletedTeam = this.Delete(team.ID);
 
-            if (team != null)
+            if (deletedTeam != null)
             {
-                team = this.Add(t);
+                deletedTeam = this.Add(team);
             }
 
-            return team;
+            return deletedTeam;
         }
 
         public Team Add(Team team)
@@ -55,7 +59,7 @@ namespace StatlerWaldorfCorp.TeamService.Persistence
             var q = teams.Where(t => t.ID == id);
             Team team = null;
 
-            if (q.Count() > 0)
+            if (q.Any())
             {
                 team = q.First();
                 teams.Remove(team);

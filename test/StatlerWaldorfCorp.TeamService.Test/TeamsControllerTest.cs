@@ -5,16 +5,14 @@ using System.Collections.Generic;
 using System.Linq;
 using Xunit;
 
-namespace StatlerWaldorfCorp.TeamService
-
+namespace StatlerWaldorfCorp.TeamService.Test
 {
     public class TeamsControllerTest
     {
-        TeamsController controller = new TeamsController(new TestMemoryTeamRepository());
-
         [Fact]
         public void QueryTeamListReturnsCorrectTeams()
         {
+            TeamsController controller = new TeamsController(new TestMemoryTeamRepository());
             var rawTeams = (IEnumerable<Team>)(controller.GetAllTeams() as ObjectResult).Value;
             List<Team> teams = new List<Team>(rawTeams);
             Assert.Equal(2, teams.Count);
@@ -24,14 +22,12 @@ namespace StatlerWaldorfCorp.TeamService
         public void CreateTeamAddsTeamToList()
         {
             TeamsController controller = new TeamsController(new TestMemoryTeamRepository());
-
             var teams = (IEnumerable<Team>)(controller.GetAllTeams() as ObjectResult).Value;
             List<Team> original = new List<Team>(teams);
 
             Team t = new Team("sample");
-            var result = controller.CreateTeam(t);
+            controller.CreateTeam(t);
 
-            var actionResult = controller.GetAllTeams() as ObjectResult;
             var newTeamsRaw = (IEnumerable<Team>)(controller.GetAllTeams() as ObjectResult).Value;
 
             List<Team> newTeams = new List<Team>(newTeamsRaw);

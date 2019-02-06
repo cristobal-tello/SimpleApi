@@ -8,7 +8,7 @@ namespace StatlerWaldorfCorp.TeamService.Controllers
     [Route("locations/{memberId}")]
     public class LocationRecordController : Controller
     {
-        private ILocationRecordRepository locationRepository;
+        readonly private ILocationRecordRepository locationRepository;
         public LocationRecordController(
         ILocationRecordRepository repository)
         {

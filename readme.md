@@ -1,5 +1,12 @@
 ﻿Original Github repo: https://github.com/microservices-aspnetcore/teamservice
 
+StatlerWaldorfCorpToken : e5b7411e3a67a840e091cb76537a13c22ac8dc33
+
+Place in .sln folder
+
+dotnet C:\sonar-scanner-msbuild-4.5.0.1761-netcoreapp2.0\SonarScanner.MSBuild.dll begin /k:e5b7411e3a67a840e091cb76537a13c22ac8dc33
+dotnet build .
+dotnet C:\sonar-scanner-msbuild-4.5.0.1761-netcoreapp2.0\SonarScanner.MSBuild.dll end
 
 To test API instead of cURL you can use Fiddler.
 

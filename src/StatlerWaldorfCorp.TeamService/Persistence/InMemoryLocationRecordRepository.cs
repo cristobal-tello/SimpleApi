@@ -6,10 +6,9 @@ using System.Linq;
 
 namespace StatlerWaldorfCorp.LocationService.Persistence
 {
-
     public class InMemoryLocationRecordRepository : ILocationRecordRepository
     {
-        private static Dictionary<Guid, SortedList<long, LocationRecord>> locationRecords;
+        readonly private Dictionary<Guid, SortedList<long, LocationRecord>> locationRecords;
 
         public InMemoryLocationRecordRepository()
         {
@@ -29,14 +28,14 @@ namespace StatlerWaldorfCorp.LocationService.Persistence
 
         public ICollection<LocationRecord> AllForMember(Guid memberId)
         {
-            var memberRecords = getMemberRecords(memberId);
+            SortedList<long, LocationRecord> memberRecords = getMemberRecords(memberId);
             return memberRecords.Values.Where(l => l.MemberID == memberId).ToList();
         }
 
         public LocationRecord Delete(Guid memberId, Guid recordId)
         {
             var memberRecords = getMemberRecords(memberId);
-            LocationRecord lr = memberRecords.Values.Where(l => l.ID == recordId).FirstOrDefault();
+            LocationRecord lr = memberRecords.Values.FirstOrDefault(l => l.ID == recordId);
 
             if (lr != null)
             {

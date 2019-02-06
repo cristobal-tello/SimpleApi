@@ -10,8 +10,8 @@ namespace StatlerWaldorfCorp.TeamService
     [Route("/teams/{teamId}/[controller]")]
     public class MembersController : Controller
     {
-        ITeamRepository repository;
-        ILocationClient locationClient;
+        readonly ITeamRepository repository;
+        readonly ILocationClient locationClient;
 
         public MembersController(ITeamRepository repository, ILocationClient locationClient)
         {
@@ -49,7 +49,7 @@ namespace StatlerWaldorfCorp.TeamService
             {
                 var q = team.Members.Where(m => m.ID == memberId);
 
-                if (q.Count() < 1)
+                if (q.Any())
                 {
                     return this.NotFound();
                 }
@@ -80,7 +80,7 @@ namespace StatlerWaldorfCorp.TeamService
             {
                 var q = team.Members.Where(m => m.ID == memberId);
 
-                if (q.Count() < 1)
+                if (q.Any())
                 {
                     return this.NotFound();
                 }
