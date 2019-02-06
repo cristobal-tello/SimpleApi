@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using StatlerWaldorfCorp.LocationService.Persistence;
+using StatlerWaldorfCorp.LocationService.TeamService;
 using StatlerWaldorfCorp.TeamService.LocationClient;
 using StatlerWaldorfCorp.TeamService.Persistence;
 
@@ -11,7 +13,7 @@ namespace StatlerWaldorfCorp.TeamService
     public class Startup
     {
         public static string[] Args { get; set; } = new string[] { };
-        public IConfigurationRoot Configuration { get; }
+        public static IConfigurationRoot Configuration { get; set;  }
 
         public Startup()
         {
@@ -28,10 +30,14 @@ namespace StatlerWaldorfCorp.TeamService
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped<ITeamRepository, MemoryTeamRepository>();
-            services.AddScoped<ILocationRecordRepository, InMemoryLocationRecordRepository>();
+            //services.AddScoped<ILocationRecordRepository, InMemoryLocationRecordRepository>();
             var locationUrl = Configuration.GetSection("location:url").Value;
             services.AddSingleton<ILocationClient>(new HttpLocationClient(locationUrl));
 
+            var connectionString = Configuration.GetSection("postgres:cstr").Value;
+            services.AddEntityFrameworkNpgsql().AddDbContext<LocationDbContext>(options => options.UseNpgsql(connectionString));
+            services.AddScoped<ILocationRecordRepository, LocationRecordRepository>();
+            
             services.AddMvc();
         }
 
