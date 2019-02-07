@@ -1,5 +1,18 @@
 ﻿Original Github repo: https://github.com/microservices-aspnetcore/teamservice
 
+Create EF Code first database (StatlerWaldorfCorp.TeamService) and go to cmd:
+
+Go to into project where LocationDbContext are:
+
+Open a cmd and type: 
+
+dotnet ef migrations add postgresqlMigration --context LocationDbContext
+
+dotnet ef database update --context LocationDbContext
+
+
+
+
 StatlerWaldorfCorpToken : e5b7411e3a67a840e091cb76537a13c22ac8dc33
 
 Place in .sln folder
@@ -12,7 +25,7 @@ To test API instead of cURL you can use Fiddler.
 
 In order to test it, you can use Fiddler as client (using Composer option), "parse" tab. eg:
 
-POST http://localhost:50138/teams
+POST http://localhost:<port>/teams
 
 User-Agent: Fiddler
 Content-Type: application/json
@@ -36,14 +49,14 @@ Samples
 
 * Add a Team
 
-POST http://localhost:50138/teams
+POST http://localhost:<port>/teams
 Content-Type: application/json
 
 Request body:
-{"id": "2c9ffaab-092a-4264-b7c9-51ecaa23accd", "name":"Real Madrid"}
+{"id": "2c9ffaab-092a-4264-b7c9-51ecaa23accd", "name":"Madrid"}
 
 * Add a member into a team
-POST http://localhost:50138/teams/2c9ffaab-092a-4264-b7c9-51ecaa23accd/members/
+POST http://localhost:<port>/teams/2c9ffaab-092a-4264-b7c9-51ecaa23accd/members/
 Content-Type: application/json
 Request body:
 {"id": "93809109-a44a-4279-8828-55febd412be6", "FirstName":"Luca","LastName":"Modric"}
@@ -60,7 +73,7 @@ Resource Method Description
 
 * Add location
 
-POST http://localhost:50138/locations/93809109-a44a-4279-8828-55febd412be6/
+POST http://localhost:<port>/locations/93809109-a44a-4279-8828-55febd412be6/
 Content-Type: application/json
 Request body:
 {"id":"55bf35ba-deb7-4708-abc2-a21054dbfa13","latitude":12.56,"longitude":45.567,"altitude":1200.0,"timestamp":1476029596,"memberID":"93809109-a44a-4279-8828-55febd412be6"}

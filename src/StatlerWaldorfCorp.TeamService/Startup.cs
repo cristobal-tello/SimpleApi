@@ -29,7 +29,7 @@ namespace StatlerWaldorfCorp.TeamService
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddScoped<ITeamRepository, MemoryTeamRepository>();
+            services.AddSingleton<ITeamRepository, MemoryTeamRepository>();
             //services.AddScoped<ILocationRecordRepository, InMemoryLocationRecordRepository>();
             var locationUrl = Configuration.GetSection("location:url").Value;
             services.AddSingleton<ILocationClient>(new HttpLocationClient(locationUrl));

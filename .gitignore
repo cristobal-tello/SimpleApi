@@ -330,3 +330,8 @@ ASALocalRun/
 .mfractor/
 /.sonarqube
 /StatlerWaldorfCorp.Output/netcoreapp2.1
+/LocationServiceCodeFirst/readme.md
+/LocationServiceCodeFirst/Program.cs
+/LocationServiceCodeFirst/LocationServiceCodeFirst.csproj
+/LocationServiceCodeFirst
+/src/StatlerWaldorfCorp.TeamService/Migrations
