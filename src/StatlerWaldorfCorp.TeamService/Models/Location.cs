@@ -2,7 +2,7 @@
 
 namespace StatlerWaldorfCorp.TeamService.Models
 {
-    public class LocationRecord
+    public class Location
     {
         public Guid ID { get; set; }
         public float Latitude { get; set; }

@@ -17,9 +17,9 @@ namespace StatlerWaldorfCorp.TeamService.LocationClient
             this.URL = url;
         }
 
-        public async Task<LocationRecord> GetLatestForMember(Guid memberId)
+        public async Task<Location> GetLatestForMember(Guid memberId)
         {
-            LocationRecord locationRecord = null;
+            Location locationRecord = new Location();
 
             using (var httpClient = new HttpClient())
             {
@@ -32,14 +32,14 @@ namespace StatlerWaldorfCorp.TeamService.LocationClient
                 if (response.IsSuccessStatusCode)
                 {
                     string json = await response.Content.ReadAsStringAsync();
-                    locationRecord = JsonConvert.DeserializeObject<LocationRecord>(json);
+                    locationRecord = JsonConvert.DeserializeObject<Location>(json);
                 }
             }
 
             return locationRecord;
         }
 
-        public async Task<LocationRecord> AddLocation(Guid memberId, LocationRecord locationRecord)
+        public async Task<Location> AddLocation(Guid memberId, Location locationRecord)
         {
             using (var httpClient = new HttpClient())
             {

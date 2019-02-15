@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <Compile Remove="controllers\TeamController.cs" />
+    <Compile Remove="Locationclient\ILocationClient1.cs" />
   </ItemGroup>
 
   <ItemGroup>

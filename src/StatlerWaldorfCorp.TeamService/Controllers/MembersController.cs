@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using StatlerWaldorfCorp.TeamService.LocationClient;
 using StatlerWaldorfCorp.TeamService.Models;
-using StatlerWaldorfCorp.TeamService.Persistence;
+using StatlerWaldorfCorp.TeamService.Repositories;
 using System;
 using System.Linq;
 
@@ -10,19 +10,19 @@ namespace StatlerWaldorfCorp.TeamService
     [Route("/teams/{teamId}/[controller]")]
     public class MembersController : Controller
     {
-        readonly ITeamRepository repository;
+        readonly ITeamRepository teamRepository;
         readonly ILocationClient locationClient;
 
         public MembersController(ITeamRepository repository, ILocationClient locationClient)
         {
-            this.repository = repository;
+            this.teamRepository = repository;
             this.locationClient = locationClient;
         }
 
         [HttpGet]
         public virtual IActionResult GetMembers(Guid teamID)
         {
-            Team team = repository.Get(teamID);
+            Team team = this.teamRepository.Get(teamID);
 
             if (team == null)
             {
@@ -34,12 +34,11 @@ namespace StatlerWaldorfCorp.TeamService
             }
         }
 
-
         [HttpGet]
         [Route("/teams/{teamId}/[controller]/{memberId}")]
         public virtual async System.Threading.Tasks.Task<IActionResult> GetMemberAsync(Guid teamID, Guid memberId)
         {
-            Team team = repository.Get(teamID);
+            Team team = this.teamRepository.Get(teamID);
 
             if (team == null)
             {
@@ -47,15 +46,15 @@ namespace StatlerWaldorfCorp.TeamService
             }
             else
             {
-                var q = team.Members.Where(m => m.ID == memberId);
+                var membersFound = team.Members.Where(m => m.ID == memberId);
 
-                if (q.Any())
+                if (membersFound.Any())
                 {
                     return this.NotFound();
                 }
                 else
                 {
-                    Member member = q.First();
+                    var member = membersFound.First();
                     return this.Ok(
                             new LocatedMember {
                                 ID = member.ID,
@@ -70,7 +69,7 @@ namespace StatlerWaldorfCorp.TeamService
         [Route("/teams/{teamId}/[controller]/{memberId}")]
         public virtual IActionResult UpdateMember([FromBody]Member updatedMember, Guid teamID, Guid memberId)
         {
-            Team team = repository.Get(teamID);
+            Team team = this.teamRepository.Get(teamID);
 
             if (team == null)
             {
@@ -86,8 +85,7 @@ namespace StatlerWaldorfCorp.TeamService
                 }
                 else
                 {
-                    team.Members.Remove(q.First());
-                    team.Members.Add(updatedMember);
+                    this.teamRepository.Update(team);
                     return this.Ok();
                 }
             }
@@ -96,7 +94,7 @@ namespace StatlerWaldorfCorp.TeamService
         [HttpPost]
         public virtual IActionResult CreateMember([FromBody]Member newMember, Guid teamID)
         {
-            Team team = repository.Get(teamID);
+            var team = this.teamRepository.Get(teamID);
 
             if (team == null)
             {
@@ -105,6 +103,8 @@ namespace StatlerWaldorfCorp.TeamService
             else
             {
                 team.Members.Add(newMember);
+                this.teamRepository.Update(team);
+
                 var teamMember = new { TeamID = team.ID, MemberID = newMember.ID };
                 return this.Created($"/teams/{teamMember.TeamID}/[controller]/{teamMember.MemberID}", teamMember);
             }
@@ -130,7 +130,7 @@ namespace StatlerWaldorfCorp.TeamService
 
         private Guid GetTeamIdForMember(Guid memberId)
         {
-            foreach (var team in repository.List())
+            foreach (var team in teamRepository.List())
             {
                 var member = team.Members.FirstOrDefault(m => m.ID == memberId);
                 if (member != null)

@@ -3,10 +3,10 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using StatlerWaldorfCorp.LocationService.Persistence;
-using StatlerWaldorfCorp.LocationService.TeamService;
 using StatlerWaldorfCorp.TeamService.LocationClient;
-using StatlerWaldorfCorp.TeamService.Persistence;
+using StatlerWaldorfCorp.TeamService.Repositories;
+using StatlerWaldorfCorp.TeamService.Repositories.Location.PostgreSQL;
+using StatlerWaldorfCorp.TeamService.Repositories.Team.PostgreSQL;
 
 namespace StatlerWaldorfCorp.TeamService
 {
@@ -29,15 +29,18 @@ namespace StatlerWaldorfCorp.TeamService
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddSingleton<ITeamRepository, MemoryTeamRepository>();
+            
             //services.AddScoped<ILocationRecordRepository, InMemoryLocationRecordRepository>();
             var locationUrl = Configuration.GetSection("location:url").Value;
             services.AddSingleton<ILocationClient>(new HttpLocationClient(locationUrl));
 
-            var connectionString = Configuration.GetSection("postgres:cstr").Value;
-            services.AddEntityFrameworkNpgsql().AddDbContext<LocationDbContext>(options => options.UseNpgsql(connectionString));
-            services.AddScoped<ILocationRecordRepository, LocationRecordRepository>();
-            
+            var teamServiceConnectionString = Configuration.GetSection("teamservice:cstr").Value;
+            var locationServiceConnectionString = Configuration.GetSection("locationservice:cstr").Value;
+
+            services.AddEntityFrameworkNpgsql().AddDbContext<TeamDbContext>(options => options.UseNpgsql(teamServiceConnectionString));
+            services.AddEntityFrameworkNpgsql().AddDbContext<LocationDbContext>(options => options.UseNpgsql(locationServiceConnectionString));
+            services.AddScoped<ITeamRepository, TeamRepository>();
+            services.AddScoped<ILocationRepository, LocationRepository>();
             services.AddMvc();
         }
 
@@ -50,11 +53,6 @@ namespace StatlerWaldorfCorp.TeamService
             }
 
             app.UseMvc();
-
-            //app.Run(async (context) =>
-            //{
-            //    await context.Response.WriteAsync("Hello World!");
-            //});
         }
     }
 }

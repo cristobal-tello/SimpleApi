@@ -1,44 +1,46 @@
-﻿using StatlerWaldorfCorp.TeamService.Models;
+﻿using Models = StatlerWaldorfCorp.TeamService.Models;
+using StatlerWaldorfCorp.TeamService.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace StatlerWaldorfCorp.TeamService.Persistence
+
+namespace StatlerWaldorfCorp.TeamService.Repositories.Memory
 {
     public class MemoryTeamRepository : ITeamRepository
     {
-        protected ICollection<Team> teams;
+        protected ICollection<Models.Team> teams;
 
         public MemoryTeamRepository()
         {
             if (teams == null)
             {
-                teams = new List<Team>();
+                teams = new List<Models.Team>();
             }
         }
 
-        public MemoryTeamRepository(ICollection<Team> teams)
+        public MemoryTeamRepository(ICollection<Models.Team> teams)
         {
             if (teams != null)
             {
                 teams.Clear();
             }
-            this.teams = new List<Team>(teams);
+            this.teams = new List<Models.Team>(teams);
         }
 
-        public IEnumerable<Team> List()
+        public IEnumerable<Models.Team> List()
         {
             return teams;
         }
 
-        public Team Get(Guid id)
+        public Models.Team Get(Guid id)
         {
             return teams.FirstOrDefault(t => t.ID == id);
         }
 
-        public Team Update(Team team)
+        public Models.Team Update(Models.Team team)
         {
-            Team deletedTeam = this.Delete(team.ID);
+            Models.Team deletedTeam = this.Delete(team.ID);
 
             if (deletedTeam != null)
             {
@@ -48,16 +50,16 @@ namespace StatlerWaldorfCorp.TeamService.Persistence
             return deletedTeam;
         }
 
-        public Team Add(Team team)
+        public Models.Team Add(Models.Team team)
         {
             teams.Add(team);
             return team;
         }
 
-        public Team Delete(Guid id)
+        public Models.Team Delete(Guid id)
         {
             var q = teams.Where(t => t.ID == id);
-            Team team = null;
+            Models.Team team = null;
 
             if (q.Any())
             {

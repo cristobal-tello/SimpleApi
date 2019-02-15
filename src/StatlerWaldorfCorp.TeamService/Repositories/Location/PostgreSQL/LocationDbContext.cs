@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using StatlerWaldorfCorp.TeamService.Models;
+using Models = StatlerWaldorfCorp.TeamService.Models;
 
-namespace StatlerWaldorfCorp.LocationService.TeamService
+namespace StatlerWaldorfCorp.TeamService.Repositories.Location.PostgreSQL
 {
     public class LocationDbContext : DbContext
     {
@@ -15,7 +15,7 @@ namespace StatlerWaldorfCorp.LocationService.TeamService
             modelBuilder.HasPostgresExtension("uuid-ossp");
         }
 
-        public DbSet<LocationRecord> LocationRecords { get; set; }
+        public DbSet<Models.Location> Locations { get; set; }
         
     }
 }

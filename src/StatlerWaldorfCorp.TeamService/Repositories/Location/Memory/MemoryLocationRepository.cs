@@ -1,24 +1,24 @@
 ﻿using StatlerWaldorfCorp.TeamService.Models;
-using StatlerWaldorfCorp.TeamService.Persistence;
+using StatlerWaldorfCorp.TeamService.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace StatlerWaldorfCorp.LocationService.Persistence
+namespace StatlerWaldorfCorp.LocationService.Repositories.Memory
 {
-    public class InMemoryLocationRecordRepository : ILocationRecordRepository
+    public class MemoryLocationRepository : ILocationRepository
     {
-        readonly private Dictionary<Guid, SortedList<long, LocationRecord>> locationRecords;
+        readonly private Dictionary<Guid, SortedList<long, Location>> locationRecords;
 
-        public InMemoryLocationRecordRepository()
+        public MemoryLocationRepository()
         {
             if (locationRecords == null)
             {
-                locationRecords = new Dictionary<Guid, SortedList<long, LocationRecord>>();
+                locationRecords = new Dictionary<Guid, SortedList<long, Location>>();
             }
         }
 
-        public LocationRecord Add(LocationRecord locationRecord)
+        public Location Add(Location locationRecord)
         {
             var memberRecords = getMemberRecords(locationRecord.MemberID);
 
@@ -26,16 +26,16 @@ namespace StatlerWaldorfCorp.LocationService.Persistence
             return locationRecord;
         }
 
-        public ICollection<LocationRecord> AllForMember(Guid memberId)
+        public ICollection<Location> AllForMember(Guid memberId)
         {
-            SortedList<long, LocationRecord> memberRecords = getMemberRecords(memberId);
+            SortedList<long, Location> memberRecords = getMemberRecords(memberId);
             return memberRecords.Values.Where(l => l.MemberID == memberId).ToList();
         }
 
-        public LocationRecord Delete(Guid memberId, Guid recordId)
+        public Location Delete(Guid memberId, Guid recordId)
         {
             var memberRecords = getMemberRecords(memberId);
-            LocationRecord lr = memberRecords.Values.FirstOrDefault(l => l.ID == recordId);
+            Location lr = memberRecords.Values.FirstOrDefault(l => l.ID == recordId);
 
             if (lr != null)
             {
@@ -45,32 +45,32 @@ namespace StatlerWaldorfCorp.LocationService.Persistence
             return lr;
         }
 
-        public LocationRecord Get(Guid memberId, Guid recordId)
+        public Location Get(Guid memberId, Guid recordId)
         {
             var memberRecords = getMemberRecords(memberId);
 
-            LocationRecord lr = memberRecords.Values.Where(l => l.ID == recordId).FirstOrDefault();
+            Location lr = memberRecords.Values.Where(l => l.ID == recordId).FirstOrDefault();
             return lr;
         }
 
-        public LocationRecord Update(LocationRecord locationRecord)
+        public Location Update(Location locationRecord)
         {
             return Delete(locationRecord.MemberID, locationRecord.ID);
         }
 
-        public LocationRecord GetLatestForMember(Guid memberId)
+        public Location GetLatestForMember(Guid memberId)
         {
             var memberRecords = getMemberRecords(memberId);
 
-            LocationRecord lr = memberRecords.Values.LastOrDefault();
+            Location lr = memberRecords.Values.LastOrDefault();
             return lr;
         }
 
-        private SortedList<long, LocationRecord> getMemberRecords(Guid memberId)
+        private SortedList<long, Location> getMemberRecords(Guid memberId)
         {
             if (!locationRecords.ContainsKey(memberId))
             {
-                locationRecords.Add(memberId, new SortedList<long, LocationRecord>());
+                locationRecords.Add(memberId, new SortedList<long, Location>());
             }
 
             foreach(var i in locationRecords)

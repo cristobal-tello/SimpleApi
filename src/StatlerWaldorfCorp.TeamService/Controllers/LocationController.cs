@@ -1,22 +1,21 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using StatlerWaldorfCorp.LocationService.Persistence;
 using StatlerWaldorfCorp.TeamService.Models;
+using StatlerWaldorfCorp.TeamService.Repositories;
 using System;
 
 namespace StatlerWaldorfCorp.TeamService.Controllers
 {
     [Route("locations/{memberId}")]
-    public class LocationRecordController : Controller
+    public class LocationController : Controller
     {
-        readonly private ILocationRecordRepository locationRepository;
-        public LocationRecordController(
-        ILocationRecordRepository repository)
+        readonly private ILocationRepository locationRepository;
+        public LocationController(ILocationRepository repository)
         {
             locationRepository = repository;
         }
 
         [HttpPost]
-        public IActionResult AddLocation(Guid memberId, [FromBody] LocationRecord locationRecord)
+        public IActionResult AddLocation(Guid memberId, [FromBody] Location locationRecord)
         {
             locationRepository.Add(locationRecord);
             return this.Created($"/locations/{memberId}/{locationRecord.ID}", locationRecord);
