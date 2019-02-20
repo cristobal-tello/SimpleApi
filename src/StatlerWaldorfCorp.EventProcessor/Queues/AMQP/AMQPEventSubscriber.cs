@@ -1,23 +1,22 @@
-﻿using System;
-using System.Text;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using StatlerWaldorfCorp.EventProcessor.Events;
+using System.Text;
 
 namespace StatlerWaldorfCorp.EventProcessor.Queues.AMQP
 {
-    public class AMQPEventSubscriber : IEventSubscriber
+    public class AmqpEventSubscriber : IEventSubscriber
     {
-        private ILogger logger;
-        private EventingBasicConsumer consumer;
-        private QueueOptions queueOptions;
+        private readonly ILogger logger;
+        private readonly EventingBasicConsumer consumer;
+        private readonly QueueOptions queueOptions;
+        private readonly IModel channel;
         private string consumerTag;
-        private IModel channel;
 
-        public AMQPEventSubscriber(ILogger<AMQPEventSubscriber> logger, IOptions<QueueOptions> queueOptions,  EventingBasicConsumer consumer)
+        public AmqpEventSubscriber(ILogger<AmqpEventSubscriber> logger, IOptions<QueueOptions> queueOptions,  EventingBasicConsumer consumer)
         {
             this.logger = logger;
             this.queueOptions = queueOptions.Value;

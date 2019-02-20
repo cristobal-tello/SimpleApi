@@ -6,8 +6,7 @@ using Microsoft.Extensions.Logging;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using StatlerWaldorfCorp.EventProcessor.Events;
-using StatlerWaldorfCorp.EventProcessor.Location;
-using StatlerWaldorfCorp.EventProcessor.Models;
+using StatlerWaldorfCorp.EventProcessor.Models.Location;
 using StatlerWaldorfCorp.EventProcessor.Queues;
 using StatlerWaldorfCorp.EventProcessor.Queues.AMQP;
 
@@ -36,17 +35,17 @@ namespace StatlerWaldorfCorp.EventProcessor
             services.AddOptions();
 
             services.Configure<QueueOptions>(Configuration.GetSection("QueueOptions"));
-            services.Configure<AMQPOptions>(Configuration.GetSection("amqp"));
+            services.Configure<AmqpOptions>(Configuration.GetSection("amqp"));
 
           //  services.AddRedisConnectionMultiplexer(Configuration);
 
-            services.AddTransient(typeof(IConnectionFactory), typeof(AMQPConnectionFactory));
-            services.AddTransient(typeof(EventingBasicConsumer), typeof(AMQPEventingConsumer));
+            services.AddTransient(typeof(IConnectionFactory), typeof(AmqpConnectionFactory));
+            services.AddTransient(typeof(EventingBasicConsumer), typeof(AmqpEventingConsumer));
 
             services.AddSingleton(typeof(ILocationCache), typeof(LocationCache));
 
-            services.AddSingleton(typeof(IEventSubscriber), typeof(AMQPEventSubscriber));
-            services.AddSingleton(typeof(IEventEmitter), typeof(AMQPEventEmitter));
+            services.AddSingleton(typeof(IEventSubscriber), typeof(AmqpEventSubscriber));
+            services.AddSingleton(typeof(IEventEmitter), typeof(AmqpEventEmitter));
             services.AddSingleton(typeof(IEventProcessor), typeof(MemberLocationEventProcessor));
         }
 

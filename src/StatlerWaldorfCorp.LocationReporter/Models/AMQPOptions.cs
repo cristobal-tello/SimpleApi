@@ -1,6 +1,6 @@
 ﻿namespace StatlerWaldorfCorp.LocationReporter.Models
 {
-    public class AMQPOptions
+    public class AmqpOptions
     {
         public string Username { get; set; }
         public string Password { get; set; }

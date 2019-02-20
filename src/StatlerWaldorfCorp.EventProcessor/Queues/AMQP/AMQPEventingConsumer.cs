@@ -4,9 +4,9 @@ using RabbitMQ.Client.Events;
 
 namespace StatlerWaldorfCorp.EventProcessor.Queues.AMQP
 {
-    public class AMQPEventingConsumer : EventingBasicConsumer
+    public class AmqpEventingConsumer : EventingBasicConsumer
     {
-        public AMQPEventingConsumer(ILogger<AMQPEventingConsumer> logger, IConnectionFactory factory) : base(factory.CreateConnection().CreateModel())
+        public AmqpEventingConsumer(ILogger<AmqpEventingConsumer> logger, IConnectionFactory factory) : base(factory.CreateConnection().CreateModel())
         {
         }
     }

@@ -1,7 +1,7 @@
 ﻿using System;
 using Newtonsoft.Json;
 
-namespace StatlerWaldorfCorp.EventProcessor.Location
+namespace StatlerWaldorfCorp.EventProcessor.Models.Location
 {
     public class MemberLocation
     {

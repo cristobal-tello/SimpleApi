@@ -12,7 +12,7 @@ namespace StatlerWaldorfCorp.LocationReporter.Services
     {
         private readonly ILogger logger;
 
-        private HttpClient httpClient;
+        private readonly HttpClient httpClient;
 
         public HttpTeamServiceClient(IOptions<TeamServiceOptions> serviceOptions, ILogger<HttpTeamServiceClient> logger)
         {

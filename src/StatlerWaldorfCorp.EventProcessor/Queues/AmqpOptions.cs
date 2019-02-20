@@ -1,6 +1,6 @@
-﻿namespace StatlerWaldorfCorp.EventProcessor.Models
+﻿namespace StatlerWaldorfCorp.EventProcessor.Queues
 {
-    public class AMQPOptions
+    public class AmqpOptions
     {
         public string Username { get; set; }
         public string Password { get; set; }

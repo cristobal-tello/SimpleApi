@@ -22,7 +22,7 @@ namespace StatlerWaldorfCorp.TeamService.Repositories.Team.PostgreSQL
 
         public Models.Team Get(Guid id)
         {
-            return this.dbContext.Teams.FirstOrDefault(t => t.ID == id);
+            return this.dbContext.Teams.Include(t => t.Members).FirstOrDefault(t => t.ID == id);
         }
 
         public Models.Team Update(Models.Team team)

@@ -7,17 +7,15 @@ using System.Text;
 
 namespace StatlerWaldorfCorp.EventProcessor.Queues.AMQP
 {
-    public class AMQPEventEmitter : IEventEmitter
+    public class AmqpEventEmitter : IEventEmitter
     {
-        private ILogger<AMQPEventEmitter> logger;
+        private readonly ILogger<AmqpEventEmitter> logger;
 
-        private IConnectionFactory connectionFactory;
+        private readonly IConnectionFactory connectionFactory;
 
-        private QueueOptions queueOptions;
+        private readonly QueueOptions queueOptions;
 
-        public AMQPEventEmitter(ILogger<AMQPEventEmitter> logger,
-            IOptions<QueueOptions> queueOptions,
-            IConnectionFactory connectionFactory)
+        public AmqpEventEmitter(ILogger<AmqpEventEmitter> logger, IOptions<QueueOptions> queueOptions, IConnectionFactory connectionFactory)
         {
             this.logger = logger;
             this.connectionFactory = connectionFactory;

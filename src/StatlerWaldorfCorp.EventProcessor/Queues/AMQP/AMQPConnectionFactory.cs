@@ -7,13 +7,13 @@ using System;
 
 namespace StatlerWaldorfCorp.EventProcessor.Queues.AMQP
 {
-    public class AMQPConnectionFactory : ConnectionFactory
+    public class AmqpConnectionFactory : ConnectionFactory
     {
-        protected AMQPOptions amqpOptions;
+        protected AmqpOptions amqpOptions;
 
-        public AMQPConnectionFactory(
-            ILogger<AMQPConnectionFactory> logger,
-            IOptions<AMQPOptions> serviceOptions) : base()
+        public AmqpConnectionFactory(
+            ILogger<AmqpConnectionFactory> logger,
+            IOptions<AmqpOptions> serviceOptions) : base()
         {
             this.amqpOptions = serviceOptions.Value;
 

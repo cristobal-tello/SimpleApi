@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-using StatlerWaldorfCorp.EventProcessor.Location;
-using System.Linq;
+﻿using StatlerWaldorfCorp.EventProcessor.Models.Location;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace StatlerWaldorfCorp.EventProcessor.Events
 {

@@ -50,17 +50,20 @@ namespace StatlerWaldorfCorp.TeamService
 
                 if (membersFound.Any())
                 {
-                    return this.NotFound();
-                }
-                else
-                {
                     var member = membersFound.First();
                     return this.Ok(
-                            new LocatedMember {
+                            new LocatedMember
+                            {
                                 ID = member.ID,
                                 FirstName = member.FirstName,
                                 LastName = member.LastName,
-                                LastLocation = await this.locationClient.GetLatestForMember(member.ID) });
+                                LastLocation = await this.locationClient.GetLatestForMember(member.ID)
+                            });
+                }
+
+                else
+                {
+                    return this.NotFound();
                 }
             }
         }

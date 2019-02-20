@@ -49,7 +49,7 @@ namespace StatlerWaldorfCorp.LocationService.Repositories.Memory
         {
             var memberRecords = getMemberRecords(memberId);
 
-            Location lr = memberRecords.Values.Where(l => l.ID == recordId).FirstOrDefault();
+            Location lr = memberRecords.Values.FirstOrDefault(l => l.ID == recordId);
             return lr;
         }
 

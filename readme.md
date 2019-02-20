@@ -80,7 +80,6 @@ POST http://localhost:<port>/teams/02c420c3-291a-46ef-8133-11ab284fd44d/members/
 -> Add location
 
 For Modric
-
 POST http://localhost:<port>/locations/84ae6b52-1596-43bb-88b4-11c579b49105/
 Content-Type: application/json
 
@@ -107,4 +106,24 @@ POST http://localhost:<port>/locations/459b425d-2dcf-4953-9256-c74502522eb3
 For Terstegen
 POST http://localhost:<port>/locations/d79d26e7-7727-4e78-9230-613aa397df46
 {"id":"5ce6c4bc-80b1-4dc1-9fcb-5d95b3c2727c","latitude":41.383,"longitude":2.129,"altitude":11.0,"timestamp":1550242777 ,"memberID":"d79d26e7-7727-4e78-9230-613aa397df46"}
+
+* LOCATION REPORTER Service REST API
+
+For Modric
+POST http://localhost:<port>/api/members/84ae6b52-1596-43bb-88b4-11c579b49105/locationreports
+Content-Type: application/json
+
+Request body:
+{ "ReportID":"3d57eee7-2a62-4a52-8bff-5cabe11922eb", "Origin":"Tottenham", "Latitude" : 51.606, "Longitude" : -0.072, "MemberID" : "84ae6b52-1596-43bb-88b4-11c579b49105" }
+
+For Benzema
+POST http://localhost:<port>/api/members/5ef3ccc2-8deb-4fc4-b9a2-d9865b84ad1d/locationreports
+{ "ReportID":"f63d88bf-482c-41e3-bed8-680303ec7ceb", "Origin":"Lyon", "Latitude" : 45.754, "Longitude" : 4.844, "MemberID" : "5ef3ccc2-8deb-4fc4-b9a2-d9865b84ad1d" }
+
+For Bale
+POST http://localhost:<port>/api/members/fdaef2af-f563-4dbf-b476-b2dcec4b526b/locationreports
+Content-Type: application/json
+{ "ReportID":"62885325-0869-4aa0-8bd3-5a19ef9bdebe", "Origin":"Tottenham", "Latitude" : 51.606, "Longitude" : -0.072, "MemberID" : "fdaef2af-f563-4dbf-b476-b2dcec4b526b" }
+
+
 

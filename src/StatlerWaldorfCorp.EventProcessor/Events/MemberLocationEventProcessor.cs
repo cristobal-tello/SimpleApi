@@ -1,28 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using StatlerWaldorfCorp.EventProcessor.Location;
+﻿using Microsoft.Extensions.Logging;
+using StatlerWaldorfCorp.EventProcessor.Models.Location;
 using StatlerWaldorfCorp.EventProcessor.Queues;
+using System.Collections.Generic;
 
 namespace StatlerWaldorfCorp.EventProcessor.Events
 {
     public class MemberLocationEventProcessor : IEventProcessor
     {
-        private ILogger logger;
-        private IEventSubscriber subscriber;
+        private readonly ILogger logger;
 
-        private IEventEmitter eventEmitter;
+        private readonly IEventSubscriber subscriber;
 
-        private ProximityDetector proximityDetector;
+        private readonly IEventEmitter eventEmitter;
 
-        private ILocationCache locationCache;
+        private readonly ProximityDetector proximityDetector;
 
-        public MemberLocationEventProcessor(
-            ILogger<MemberLocationEventProcessor> logger,
-            IEventSubscriber eventSubscriber,
-            IEventEmitter eventEmitter,
-            ILocationCache locationCache
-        )
+        private readonly ILocationCache locationCache;
+
+        public MemberLocationEventProcessor(ILogger<MemberLocationEventProcessor> logger, IEventSubscriber eventSubscriber, IEventEmitter eventEmitter, ILocationCache locationCache)
         {
             this.logger = logger;
             this.subscriber = eventSubscriber;
@@ -40,7 +35,7 @@ namespace StatlerWaldorfCorp.EventProcessor.Events
                     eventEmitter.EmitProximityDetectedEvent(proximityEvent);
                 }
 
-                /*locationCache.Put(mlre.TeamID, new MemberLocation
+                locationCache.Put(mlre.TeamID, new MemberLocation
                 {
                     MemberID = mlre.MemberID,
                     Location = new GpsCoordinate
@@ -48,7 +43,7 @@ namespace StatlerWaldorfCorp.EventProcessor.Events
                         Latitude = mlre.Latitude,
                         Longitude = mlre.Longitude
                     }
-                })*/;
+                });
             };
         }
 

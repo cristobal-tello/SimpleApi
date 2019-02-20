@@ -31,10 +31,10 @@ namespace StatlerWaldorfCorp.LocationReporter
             services.AddMvc();
             services.AddOptions();
 
-            services.Configure<AMQPOptions>(Configuration.GetSection("amqp"));
+            services.Configure<AmqpOptions>(Configuration.GetSection("amqp"));
             services.Configure<TeamServiceOptions>(Configuration.GetSection("teamservice"));
 
-            services.AddSingleton(typeof(IEventEmitter), typeof(AMQPEventEmitter));
+            services.AddSingleton(typeof(IEventEmitter), typeof(AmqpEventEmitter));
             services.AddSingleton(typeof(ICommandEventConverter), typeof(CommandEventConverter));
             services.AddSingleton(typeof(ITeamServiceClient), typeof(HttpTeamServiceClient));
         }

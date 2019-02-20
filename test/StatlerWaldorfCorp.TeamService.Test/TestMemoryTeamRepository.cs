@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using StatlerWaldorfCorp.TeamService.Repositories;
+using StatlerWaldorfCorp.TeamService.Repositories.Memory;
 
 namespace StatlerWaldorfCorp.TeamService.Models
 {

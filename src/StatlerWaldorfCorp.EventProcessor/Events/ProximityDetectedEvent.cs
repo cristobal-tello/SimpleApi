@@ -1,6 +1,6 @@
 ﻿using System;
 using Newtonsoft.Json;
-using StatlerWaldorfCorp.EventProcessor.Location;
+using StatlerWaldorfCorp.EventProcessor.Models.Location;
 
 namespace StatlerWaldorfCorp.EventProcessor.Events
 {

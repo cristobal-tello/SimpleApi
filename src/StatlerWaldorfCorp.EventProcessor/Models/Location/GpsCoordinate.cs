@@ -1,4 +1,4 @@
-﻿namespace StatlerWaldorfCorp.EventProcessor.Location
+﻿namespace StatlerWaldorfCorp.EventProcessor.Models.Location
 {
     public class GpsCoordinate
     {

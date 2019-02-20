@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace StatlerWaldorfCorp.EventProcessor.Location
+namespace StatlerWaldorfCorp.EventProcessor.Models.Location
 {
     public interface ILocationCache
     {

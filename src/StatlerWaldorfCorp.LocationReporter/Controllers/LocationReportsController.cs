@@ -9,9 +9,9 @@ namespace StatlerWaldorfCorp.LocationReporter.Controllers
     [Route("/api/members/{memberId}/locationreports")]
     public class LocationReportsController : Controller
     {
-        private ICommandEventConverter converter;
-        private IEventEmitter eventEmitter;
-        private ITeamServiceClient teamServiceClient;
+        private readonly ICommandEventConverter converter;
+        private readonly IEventEmitter eventEmitter;
+        private readonly ITeamServiceClient teamServiceClient;
 
 
         public LocationReportsController(ICommandEventConverter converter,

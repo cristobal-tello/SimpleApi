@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
+﻿using Microsoft.Extensions.Options;
 using RabbitMQ.Client;
 using StatlerWaldorfCorp.LocationReporter.Models;
 using System;
@@ -8,17 +7,15 @@ using System.Text;
 namespace StatlerWaldorfCorp.LocationReporter.Events
 {
 
-    public class AMQPEventEmitter : IEventEmitter
+    public class AmqpEventEmitter : IEventEmitter
     {
         public const string QUEUE_LOCATIONRECORDED = "memberlocationrecorded";
 
-        private readonly ILogger logger;
-        private AMQPOptions rabbitOptions;
-        private ConnectionFactory connectionFactory;
+        private readonly AmqpOptions rabbitOptions;
+        private readonly ConnectionFactory connectionFactory;
 
-        public AMQPEventEmitter(ILogger<AMQPEventEmitter> logger, IOptions<AMQPOptions> amqpOptions)
+        public AmqpEventEmitter(IOptions<AmqpOptions> amqpOptions)
         {
-            this.logger = logger;
             this.rabbitOptions = amqpOptions.Value;
 
             connectionFactory = new ConnectionFactory();
@@ -28,8 +25,6 @@ namespace StatlerWaldorfCorp.LocationReporter.Events
             connectionFactory.VirtualHost = rabbitOptions.VirtualHost;
             connectionFactory.HostName = rabbitOptions.HostName;
             connectionFactory.Uri = new Uri(rabbitOptions.Uri);
-
-            logger.LogInformation("AMQP Event Emitter configured with URI {0}", rabbitOptions.Uri);
         }
 
         public void EmitLocationRecordedEvent(MemberLocationRecordedEvent locationRecordedEvent)
